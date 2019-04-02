@@ -1,0 +1,48 @@
+
+body 
+{
+	color:orange;
+	background-color:#d0e4fe;
+	font-size:16px;
+}
+ h1 {color:#00ffff;}
+ h2 {color:rgb(255,255,0);}
+ title {color:rgb(255,255,0);}
+ p {color:red;}
+table 
+{
+ width:300px;
+ border-collapse:collapse;
+ border:3px solid black;
+}
+th
+{
+ height:20px;
+ background-color:green;
+ color:coral;
+}
+ td
+ {
+ font-size:24px;
+ border: 2px solid black;
+ height:60px;
+ vertical-align:top;
+ color:Black;
+ background-color:DodgerBlue;
+ }
+ select
+ {
+ font-size:24px;
+ }
+
+ .center
+{
+text-align:center;
+}
+ 
+
+#para1
+{
+	color:DodgerBlue;
+	background-color:#d0e4fe;
+}

@@ -1,0 +1,230 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ page import="com.fxs.Games.*" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+
+<script>
+
+var currentPlayerIndex = -1;
+var currentPlayerCommand = '';
+
+function command(playerIndex,playerCommand)
+{
+var xmlhttp;
+//alert("before " + currentPlayerIndex);
+
+if (currentPlayerIndex == -1) {
+  	currentPlayerIndex = playerIndex;
+}
+//alert("after " + currentPlayerIndex);
+
+currentPlayerCommand = playerCommand;
+
+var divName = "hand" + currentPlayerIndex;
+
+//alert(divName);
+//alert(currentPlayerCommand);
+
+
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+	  //alert("ready");
+	    document.getElementById(divName).innerHTML=xmlhttp.responseText;
+	    var resp = xmlhttp.responseText;
+	    if ((currentPlayerCommand == 'stand') || (resp.indexOf("BUSTED") >= 0) || (resp.indexOf("21") >= 0))
+	    {
+	    	currentPlayerIndex = (parseInt(currentPlayerIndex,10) + 1);
+//	    	alert("next " + currentPlayerIndex);
+			if (currentPlayerIndex < 7) {
+		    	divName = "hand" + currentPlayerIndex;
+		    	currentPlayerCommand = 'next';
+		        var cmd = "http://localhost:9080/FootballPool/DealCardServlet?playerIndex=" + currentPlayerIndex + "&playerCommand="+ currentPlayerCommand;
+//	        	alert(cmd);
+	        	xmlhttp.open("GET",cmd,true);
+	        	xmlhttp.send();
+	    	}
+	    	else {
+	        	alert("showResults");
+	    		showResults();
+	    	}
+	    }
+    }
+  };
+  var cmd = "http://localhost:9080/FootballPool/DealCardServlet?playerIndex=" + currentPlayerIndex + "&playerCommand="+ currentPlayerCommand;
+//  alert(cmd);
+  xmlhttp.open("GET",cmd,true);
+  xmlhttp.send();
+
+}
+function showResults()
+{
+var xmlhttp; 
+var divName = "results";
+
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+	  //alert("ready");
+    document.getElementById(divName).innerHTML=xmlhttp.responseText;
+    }
+  };
+
+  xmlhttp.open("GET","http://localhost:9080/FootballPool/BlackjackResultsServlet",true);
+  xmlhttp.send();
+
+}
+</script>
+<% 
+
+
+Blackjack game = (Blackjack) session.getServletContext().getAttribute("gameName");
+/*
+Blackjack game = new Blackjack(5);
+long seed = System.currentTimeMillis() % 100;
+for (long t=0;t<seed;t++) {
+	game.shuffle();
+}
+System.out.println("Deal the cards");
+*/
+game.deal();
+int currentPlayer = 1;
+int highHand = 0;
+String winningPlayer = "";
+String pushPlayer = "";
+String losingPlayer = "";
+String cIndex="";
+String pIndex="";
+String handDivName = "";
+%>
+<title>Blackjack Version: <%= game.getVersion()%></title>
+<style>
+.heart
+{
+height:50px;width:30px;border-style:solid;background-color:white;border-color:blue;border-width:medium;
+}
+.spade
+{
+height:50px;width:30px;border-style:solid;background-color:white;border-color:blue;border-width:medium;
+}
+</style>
+
+</head>
+<body>
+<%
+System.out.println("PlayerCount =  " + game.getPlayerCount());
+boolean foundStart=false;
+int dealerValue = game.getHand(game.getPlayerCount()-1).computeHandValue();
+System.out.println("Dealer has " + dealerValue);
+
+for (int x=0;x<game.getPlayerCount();x++) { 
+	BlackjackHand h = game.getHand(x);
+	handDivName	= "hand" + String.valueOf(x);
+%>
+<TABLE >
+<TR>
+<TD width="49"><%= game.getPlayerName(x) %></TD>
+</TR>
+<TR>
+<TD> 
+<div id="<%= handDivName %>" >
+<TABLE >
+<TR>
+
+<%
+	int hitIndex= -1;
+	for(int c=0;c<6;c++) {
+		if (h.getCard(c) != null) {
+			String imageName = "images/" + h.getCard(c).getImageName() + ".gif";
+//			System.out.println(imageName);
+			String divID = String.valueOf(x) + "^" + String.valueOf(c);
+%>
+			<TD><div id="<%= divID %>"> <img border="0" src="<%= imageName %>" width="49" height="66"></div></TD>
+<%
+		}
+		else {
+			if (hitIndex == -1) {
+				hitIndex = c;
+			}
+%>
+			<TD><img border="0" src="images/NoCard.gif" width="49" height="66"></TD>
+<%
+		}
+	}
+%>
+<% 
+//tbd loop to find first non 21
+//if (x < game.getPlayerCount()-1) {
+if ((h.computeHandValue() != 21) && !foundStart && (dealerValue != 21)) {
+	foundStart = true;
+%>
+<TD width="20"><%= h.computeHandValue()%></TD>
+<TD> <input name="hit" type="button" value="Hit" onclick="command('<%= x %>','hit')" /></TD>
+<TD><input name="stand" type="button" value="Stand" onclick="command('<%= x %>','stand')" /></TD>
+<% } %>
+
+</TR>
+</TABLE>
+</div>
+</TD>
+</TR>
+</TABLE>
+
+<% }
+
+//game = (Blackjack) session.getServletContext().getAttribute("gameName");
+if (dealerValue == 21) {
+	for (int x=0;x<game.getPlayerCount();x++) { 
+		BlackjackHand h = game.getHand(x);
+		if (h.getValue() > 21) {
+			losingPlayer = losingPlayer + h.getPlayerName() + " ";
+		}
+		else if (h.getValue() < dealerValue && (x < game.getPlayerCount()-1)) {
+			losingPlayer = losingPlayer + h.getPlayerName() + " ";
+		}
+		else if (h.getValue() > dealerValue && (x < game.getPlayerCount()-1)) {
+			winningPlayer = winningPlayer + h.getPlayerName() + " ";
+		}
+		else if (h.getValue() == dealerValue && (x < game.getPlayerCount()-1)) {
+			pushPlayer = pushPlayer + h.getPlayerName() + " ";
+		}
+	}
+%>
+	<div id="results" >
+	<p>Dealer Wins!!!</p>
+	</div>
+<%
+}
+else {
+%>
+	<div id="results" >
+	<p>Play On</p>
+	</div>
+<%
+}
+%>
+</body>
+</html>
