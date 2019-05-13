@@ -38,18 +38,18 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-          </button>
+          </button>          
         </div>
 
         <div id="collapsable-nav" class="collapse navbar-collapse">
           <ul id="nav-list" class="nav navbar-nav navbar-right">
             <li>
-              <a href="menu-categories.html">
-                <span class="glyphicon glyphicon-knight"></span><br class="hidden-xs"> Games</a>
+              <a href="Players.jsp">
+                <span class=" glyphicon glyphicon-user"></span><br class="hidden-xs"> Players</a>
             </li>
             <li>
-              <a href="#">
-                <span class="glyphicon glyphicon-user"></span><br class="hidden-xs"> Players</a>
+              <a href="menu-categories.html">
+                <span class="glyphicon glyphicon-knight"></span><br class="hidden-xs"> Games</a>
             </li>
             <li>
               <a href="#">
@@ -59,11 +59,53 @@
               <a href="#">
                 <span class="glyphicon glyphicon-info-sign"></span><br class="hidden-xs"> About</a>
             </li>
+            <li>
+              <a id="loginButton">
+              <span class="glyphicon glyphicon-log-in" id="loginButton"></span><br class="hidden-xs"> Login</a>
+            </li>
           </ul><!-- #nav-list -->
         </div><!-- .collapse .navbar-collapse -->
       </div><!-- .container -->
     </nav><!-- #header-nav -->
   </header>
+  <div id="loginModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg" role="content">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Login </h4>
+          <button type="button" class="close btn-danger" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-row">
+              <div class="form-group col-sm-4">
+                <label class="sr-only" for="exampleInputEmail3">Email address</label>
+                <input type="email" class="form-control form-control-sm mr-1" id="exampleInputEmail3"
+                  placeholder="Enter email">
+              </div>
+              <div class="form-group col-sm-4">
+                <label class="sr-only" for="exampleInputPassword3">Password</label>
+                <input type="password" class="form-control form-control-sm mr-1" id="exampleInputPassword3"
+                  placeholder="Password">
+              </div>
+              <div class="col-sm-auto">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox">
+                  <label class="form-check-label"> Remember me
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <button type="button" class="btn btn-danger btn-sm ml-auto" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary btn-sm ml-1">Sign in</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- 
   <div id="call-btn" class="visible-xs">
     <a class="btn" href="tel:410-602-5008">
@@ -89,11 +131,11 @@
         </a>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12 game-tile">
-          <a href="http://localhost:9080/FootballPool/NFLPlayoffPool.jsp">
-            <div id="pool-tile"><span> Football Pool</span></div>
-          </a>
-        </div>
-        <div class="col-md-3 col-sm-6 col-xs-12 game-tile">
+        <a href="http://localhost:9080/FootballPool/NFLPlayoffPool.jsp">
+          <div id="pool-tile"><span> Football Pool</span></div>
+        </a>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12 game-tile">
         <a href="bingo.html">
           <div id="bingo-tile"><span> Bingo</span></div>
         </a>
@@ -109,18 +151,24 @@
   <footer class="footer">
     <div class="container">
       <div class="row">
-          <div class="col-xs-12 text-center">
-            <p>© Copyright 2018 Frank Sylvia</p>
-          </div>
+        <div class="col-xs-12 text-center">
+          <p>© Copyright 2019 Frank Sylvia</p>
         </div>
+      </div>
     </div>
   </footer>
-
 
   <!-- jQuery (Bootstrap JS plugins depend on it) -->
   <script src="js/jquery-2.1.4.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/script.js"></script>
+  <script>
+    $(document).ready(function () {
+        $("#loginButton").click(function () {
+            $('#loginModal').modal('toggle')
+        });
+    });
+</script>
 </body>
 
 </html>

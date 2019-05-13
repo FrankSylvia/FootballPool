@@ -1,19 +1,20 @@
 package com.fxs.util;
 
-public class PoolPlayer implements Person {
+public class PoolPlayer implements IPerson {
 	private int Id;
 	private String name;
-	private PoolAgent agentId;
 	private String moniker;
 	private String email;
+	private PoolAgent agent;
 	
 	
 	
-	public PoolPlayer (int Id, String moniker, String name, String email, int pa) {
+	public PoolPlayer (int Id, String moniker, String name, String email, int ag_id, String ag_moniker) {
 		setId(Id);
 		setMoniker(moniker);
 		setName(name);
 		setEmail(email);
+		agent = new PoolAgent(ag_id,ag_moniker,name,email);
 	}
 	
 	public PoolPlayer (int Id, String moniker, String name, String email) {
@@ -32,17 +33,43 @@ public class PoolPlayer implements Person {
 	}
 
 	/**
+	 * @return the agent
+	 */
+	public PoolAgent getAgent() {
+		return agent;
+	}
+	/**
 	 * @return the agentId
 	 */
-	public PoolAgent getAgentId() {
-		return agentId;
+	public int getAgentId() {
+		return agent.getId();
+	}
+
+/**
+	 * @return the agentMoniker
+	 */
+	public String getAgentMoniker() {
+		return agent.getMoniker();
 	}
 
 	/**
+	 * @param agent set the agent (id and moniker)
+	 */
+	public void setAgent(int agentId, String agentMoniker) {
+		this.agent.setId(agentId);
+		this.agent.setMoniker(agentMoniker);
+	}
+	/**
 	 * @param agentId the agentId to set
 	 */
-	public void setAgentId(PoolAgent agentId) {
-		this.agentId = agentId;
+	public void setAgentId(int agentId) {
+		this.agent.setId(agentId);
+	}
+	/**
+	 * @param agentId the agentMoniker to set
+	 */
+	public void setAgentMoniker(String agentMoniker) {
+		this.agent.setMoniker(agentMoniker);
 	}
 
 	/**
@@ -86,5 +113,10 @@ public class PoolPlayer implements Person {
 		Id = id;
 	}
 
+	public String dump() {
+		String line = "";
+		line = String.valueOf(getId()) + "," + getMoniker() + "," + getName() + "," + getEmail() + "," + getMoniker() + "," + String.valueOf(getAgentId()); 
+		return line;
+	}
 	
 }

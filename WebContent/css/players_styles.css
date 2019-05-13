@@ -1,0 +1,78 @@
+.body {
+  color: blue;
+  background-color: lightblue;
+}
+
+.h2 {
+  color: blue;
+  font-family: 'Lora', serif;
+   
+}
+.row-content {
+  margin: 5px 5px;
+  padding: 0px 0px;
+}
+
+.footer {
+  background-color: #D1C4E9;
+  margin: 0px auto;
+  padding: 20px 0px; 
+}
+
+.playerlistdiv {
+  padding: 5px 5px;
+}
+.playerlist {
+  font-weight: bold !important;
+  color: blue !important;
+  background: lightblue !important;
+  width: 200px;
+  padding: 5px 5px;
+  border-color: black;
+  border-width: 2px;
+}
+.playerlistbuttons {
+  margin: 15px 0px 0px 15px;
+}
+.playeroption {
+  font-weight: bold !important;
+  color: blue !important;
+  background: lightblue !important;
+  width: 200px;
+}
+
+.playerdetail {
+  padding: 5px 5px;
+  border: 2px solid black;
+  color: blue !important;
+  background: lightblue !important;
+}
+
+.playerdetailfirst {
+  margin-top: 15px;
+}
+
+
+.tab-content {
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 10px; }
+
+
+.modal-header {
+  background: #512DA8;
+  color: floralwhite; }
+  .modal-header button {
+    color: floralwhite; }
+
+.modal-body {
+  background: #D1C4E9; 
+}
+
+.footer {
+    background-color: #D1C4E9;
+    margin: 0px auto;
+    padding: 20px 0px; 
+}
+  

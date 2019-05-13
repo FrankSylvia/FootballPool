@@ -32,10 +32,12 @@ public class DealCardServlet extends HttpServlet {
 	    
 	    int iPlayerIndex = Integer.valueOf(playerIndex);
 	    
+	    System.out.println("Player: " + game.getPlayerName(iPlayerIndex));
+	    
 	    Card card = new Card();
 	    
+		LinkedList<Card> cards = game.getDeck();
 		if (playerCommand.equals("hit")) {
-			LinkedList<Card> cards = game.getDeck();
 			card = cards.pop();
 		}
 		
@@ -68,21 +70,43 @@ public class DealCardServlet extends HttpServlet {
     			}
     		}
     	}
-    		if (handValue > 21){
-				message +=  "<div class='col col-1 pull-left' width='20'>BUSTED</div>";
-    			
-    		}
+   		if (handValue > 21){
+			message +=  "<div class='col col-1 pull-left' width='20'>BUSTED</div>";
+   			
+   		}
     		
-    		if ((playerCommand.equals("hit")||playerCommand.equals("next")) && (handValue < 21)) {
-    			String hitString = "\"hit\"";
-    			String standString = "\"stand\"";
-    			message += "<div class='col col-1 pull-left'><input class='btn btn-primary' type='button' value='Hit'  onclick='command(" + playerIndex + "," + hitString + ")' /></div>";
-    			message += "<div class='col col-1 pull-left'><input class='btn btn-danger' type='button' value='Stand' onclick='command(" + playerIndex + "," + standString + ")' /></div>";       
-    			
-    		}
+   		if (iPlayerIndex < (game.getPlayerCount() - 1)) {
+   			if ((playerCommand.equals("hit")||playerCommand.equals("next")) && (handValue <= 21)) {
+   				String hitString = "\"hit\"";
+   				String standString = "\"stand\"";
+   				message += "<div class='col col-1 pull-left'><input class='btn btn-primary' type='button' value='Hit'  onclick='command(" + playerIndex + "," + hitString + ")' /></div>";
+   				message += "<div class='col col-1 pull-left'><input class='btn btn-danger' type='button' value='Stand' onclick='command(" + playerIndex + "," + standString + ")' /></div>";           			
+   			}
+   		}
+   		if ((iPlayerIndex) == (game.getPlayerCount() - 1)) {
+   			System.out.println("Dealer gets cards");
+			handValue = 0;
+   	        h = game.getHand(iPlayerIndex);
+   			strHandValue = "";
+   	    	for(int c=0;c<6;c++) {
+   	    		if (h.getCard(c) == null) {
+   	   	   	    		System.out.println("Pop a card");
+   	   	   	    		card = cards.pop();
+   	   	   	    		h.add(c, card);
+   	   	   	    		imageName = "images/" + h.getCard(c).getImageName() + ".gif";
+   	   	   	    		strHandValue = String.valueOf(h.computeHandValue());
+   	   	   	    		handValue += Integer.valueOf(strHandValue);
+   	   	   	    		message += "<div class='col col-1 pull-left'><img border='0' src='" + imageName + "' width='49' height='66'></div>";
+   	   	   	    		System.out.println("Hand Value = " + handValue);
+   	   	   	    		if (handValue >= 17) {
+   	   	   	    			break;
+   	   	   	    		}
+ 	    		}
+   			}
+    	}
     	System.out.println(message);
         out.print(message);
 
+	    session.setAttribute("gameName",game);
 	}
-
 }

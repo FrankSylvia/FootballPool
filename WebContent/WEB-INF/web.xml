@@ -27,7 +27,10 @@
   <servlet id="Servlet_5">
     <servlet-name>BlackjackResultsServlet</servlet-name>
     <servlet-class>com.fxs.servlets.BlackjackResultsServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>
+    <init-param>
+      <param-name>expiresAfterAccessInSecs</param-name>
+      <param-value>0</param-value>
+    </init-param>    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet id="Servlet_4">
     <servlet-name>WebRequstResponder</servlet-name>

@@ -4,12 +4,15 @@
 <%@ page import="com.fxs.util.*" %>
 <table>    
 <%
-System.out.println("querystring= " + request.getQueryString());
-System.out.println("getting players for " + request.getParameter("agent"));
+//System.out.println("querystring= " + request.getQueryString());
+//System.out.println("getting players for " + request.getParameter("agent"));
 ArrayList<PoolPlayer> list = null;
 PoolAccess pool = new PoolAccess();
 
-list = pool.getPlayersForAgent(Integer.valueOf(request.getParameter("agent")));
+//list = pool.getPlayersForAgent(Integer.valueOf(request.getParameter("agent")));
+list = pool.getPlayersForAgent(1);
+
+System.out.println("got players for " + request.getParameter("agent"));
 
 if (!list.isEmpty()) {
 	for (int i=0;i<list.size();i++) {

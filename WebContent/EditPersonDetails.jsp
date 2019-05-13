@@ -3,15 +3,13 @@
 <%@ page import="com.fxs.util.*" %>
 <%
 System.out.println("querystring= " + request.getQueryString());
-PoolPlayer pp = null;
+Person pp = null;
 PoolAccess pool = new PoolAccess();
 
 String cols[] = pool.getPlayerColumns();
 
-pp = pool.getPlayerDetails(Integer.valueOf(request.getParameter("player")));
-pp.dump();
-String AgentMoniker = pp.getAgentMoniker();
-System.out.println("Version 1.2");
+pp = pool.getPersonDetails(Integer.valueOf(request.getParameter("player")));
+System.out.println(pp.dump());
 %>
 <div class="row row-content">
     <div class="col-12 col-md-9 playerdetail">
@@ -47,13 +45,6 @@ System.out.println("Version 1.2");
                 </div>
             </div>
             <div class="form-group row">
-                <label for="agent" class="col-sm-3 col-form-label pull-left">Agent: </label>
-                <div class="col-sm-9 pull-left">
-                    <input type="email" class="form-control" id="agent" name="agent"
-                        placeholder="Junk">
-                </div>
-            </div>
-            <div class="form-group row">
                 <div class="col-sm-3">
                 </div>
                 <div class="col-sm-3">
@@ -68,4 +59,5 @@ System.out.println("Version 1.2");
 </div>
 <%
 System.out.println("Exiting EditPlayerDetails");
+
 %>

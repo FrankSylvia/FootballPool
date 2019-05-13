@@ -16,13 +16,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 /**
+
  * Servlet implementation class Startup
  */
 @WebServlet("/Startup")
 public class Startup extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	static Logger logger = Logger.getLogger("MyLogger");
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -58,9 +63,39 @@ public class Startup extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		System.out.println("Starting.....");
 
+		try {// TODO Auto-generated method stub
+			
+			System.out.println("Starting version 1.0.7");
+			
+			
+	        //PropertiesConfigurator is used to configure logger from properties file
+	        PropertyConfigurator.configure("shit.properties");
+
+			System.out.println("Logger class = " + Logger.class.toString());
+		
+			System.out.println("Log name is " + logger.getName());
+			logger.info("I'm logging");
+
+			
+			if (logger.isInfoEnabled()) {
+				System.out.println("INFO is enabled");
+				logger.info("I'm infoing");				
+			}
+			else {
+				System.out.println("INFO is not enabled");
+			}
+
+			if (logger.isDebugEnabled()) {
+				logger.debug("I'm debugging");
+			}
+			else {
+				System.out.println("DEBUG is not enabled");
+			}
+		}
+		catch (Exception e) {
+			System.out.println("Exception = " + e.getMessage());
+		}
 		Enumeration<String> ie = request.getParameterNames();
 		if (ie.hasMoreElements()) {
 			String s = ie.nextElement();

@@ -1,3 +1,14 @@
+.row-header {
+  margin: 0px auto;
+  padding: 0px 0px; }
+
+.row-content {
+  margin: 0px auto;
+  padding: 10px 0px;
+  border-bottom: 1px ridge;
+}
+
+
 body {
   font-size: 16px;
   color: #fff;
@@ -60,6 +71,16 @@ body {
   font-size: 1.8em;
 }
 
+.modal-header {
+  background: blue;
+  color: floralwhite; }
+  .modal-header button {
+    color: yellow; }
+
+.modal-body {
+  background: lightblue; 
+}
+
 #phone {
   margin-top: 5px;
 }
@@ -88,6 +109,7 @@ body {
   border: 2px solid #3F0C1F;
 }
 
+/* CASINO PAGES */
 #blackjack-tile, #poker-tile, #pool-tile, #bingo-tile, #keno-tile {
   height: 250px;
   width: 100%;
@@ -141,9 +163,19 @@ body {
   border-width: medium;
   background-color: green;
   margin: 5% 5%;
-
 }
 
+.theResults {
+  background-color: lightblue;
+  color: blue;
+  border-style: solid;
+  border-width: medium;
+  
+}
+.theResultLine {
+  text-align: right;
+  margin-left: 20px;	
+}
 /* END Blackjack PAGE */
 
 /********** Large devices only **********/

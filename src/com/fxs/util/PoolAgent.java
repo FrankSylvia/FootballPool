@@ -7,7 +7,7 @@ package com.fxs.util;
  * @author FrankAdmin
  *
  */
-public class PoolAgent implements Person {
+public class PoolAgent implements IPerson {
 	private int Id;
 
 	private String name;
@@ -92,6 +92,11 @@ public class PoolAgent implements Person {
 	 */
 	public String getEmail() {
 		return email;
+	}
+	public String dump() {
+		String line = "";
+		line = String.valueOf(getId()) + "," + getMoniker() + "," + getName() + "," + getEmail() + "," + getMoniker(); 
+		return line;
 	}
 
 }

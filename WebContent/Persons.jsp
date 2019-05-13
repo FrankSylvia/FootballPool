@@ -46,17 +46,16 @@
         }
       };
       //alert("Editing");
-      xmlhttp.open("GET", "http://localhost:9080/FootballPool/EditPlayerDetails.jsp?player=" + str, true);
+      xmlhttp.open("GET", "http://localhost:9080/FootballPool/EditPersonDetails.jsp?player=" + str, true);
 
       xmlhttp.send();
     }
-
   </script>
 </head>
 
 <body>
   <div>
-    <h2 id=para1 class="text-center">Players</h2>
+    <h2 id=para1 class="text-center">Persons</h2>
   </div>
   <div class="container-fluid">
     <div class="row">
@@ -65,15 +64,13 @@
             <option class="playeroption" value="" >Select a player</option>
 
 <%
-System.out.println("Get list of player v1");
-ArrayList<PoolPlayer> list;
+System.out.println("Get list of users v1");
+ArrayList<Person> list;
 PoolAccess pool = new PoolAccess();
-list = pool.getPlayerList();
+list = pool.getPersonList();
 if (!list.isEmpty()) {
 	for (int i=0;i<list.size();i++) {
-		PoolPlayer p = list.get(i);
-		System.out.println("player = " + p.getMoniker() + p.getId());
-		System.out.println("agent = " + p.getAgentId());
+		Person p = list.get(i);
 %>
           <option class="playeroption" value="<%=p.getId()%>"><%= p.getMoniker() %></option>
 <%		 
@@ -92,7 +89,7 @@ else {
 
       <div class="form-group row playerlistbuttons">
         <div class="offset-sm-2 col-sm-2 pull-left">
-          <button name="Close" class="btn btn-primary" onclick="window.close()">Done</button>
+          <button name="Close" type="close" class="btn btn-primary" onclick="window.close()">Done</button>
         </div>
       </div>
 </div> <!-- container-->
